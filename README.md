@@ -42,3 +42,9 @@ All commands are run from the root of the project, from a terminal:
 | `yarn preview`          | Preview your build locally, before deploying     |
 | `yarn astro ...`        | Run CLI commands like `astro add`, `astro check` |
 | `yarn astro add --help` | Get help using the Astro CLI                     |
+
+## 👀 Add Tailwind
+
+Run command `yarn astro add --help` to get command help
+
+Add tailwind `yarn astro add tailwind`
