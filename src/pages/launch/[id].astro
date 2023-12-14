@@ -1,9 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getLaunchById } from "../../services/spacex";
+import { getLatestLaunches, getLaunchById } from "../../services/spacex";
 
-// Este especifica que la pagina es exclusiva en SERVER SIDE
-export const prerender = false;
+export async function getStaticPaths() {
+  const launches = await getLatestLaunches();
+  return launches.map((launch) => ({ params: { id: launch.id } }));
+}
 
 const { id } = Astro.params;
 
