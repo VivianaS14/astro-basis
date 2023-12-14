@@ -1,0 +1,40 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getLaunchById, getLatestLaunches } from "../../services/spacex";
+
+export async function getStaticPaths() {
+  // Si queremos conocer todas las rutas
+  // podemos llamar a la API para traer los ids
+
+  // Esto es posible si sabemos todas las paginas en las
+  // que el usuario puede navegar
+  // son LIMITADAS las paginas
+  const launches = await getLatestLaunches();
+  return launches.map((launch) => ({ params: { id: launch.id } }));
+
+  // return [{ params: { id: "5eb87cdaffd86e000604b32b" } }];
+}
+
+const { id } = Astro.params;
+
+let launch;
+if (id) {
+  launch = await getLaunchById({ id });
+}
+---
+
+<Layout title={`Launch ${id}`}>
+  <div
+    class="m-auto max-w-md rounded-lg border shadow-md bg-gray-800 border-gray-700"
+  >
+    <h1 class="text-white text-3xl text-center mb-6">{launch?.name}</h1>
+
+    <picture class="flex justify-center p-4">
+      <img
+        class="mb-5 rounded-lg"
+        src={launch?.links.patch.small}
+        alt={`Patch for launch ${launch?.id}`}
+      />
+    </picture>
+  </div>
+</Layout>
